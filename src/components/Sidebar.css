@@ -1,0 +1,49 @@
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background-color: #2c3e50;
+  color: white;
+  height: 100vh;
+  padding: 20px;
+  position: sticky;
+  top: 0;
+}
+.logo-accent {
+  color: #3498db; /* أو #2ecc71 ليطابق لون شريط الإنجاز */
+}
+
+.sidebar h2 {
+  /*margin-bottom: 30px;
+  text-align: center;*/
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  padding-bottom: 20px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* خط خفيف يفصل اللوجو عن الروابط */
+  letter-spacing: 1px;
+}
+
+
+.sidebar a {
+  display: block;
+  color: #ecf0f1;
+  text-decoration: none;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  outline: none;
+}
+
+.sidebar a:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* تنسيق الصفحة المفتوحة حالياً */
+.sidebar a.active {
+  background-color: #3498db; /* نفس لون كلمة Flow */
+  color: #ffffff;
+  font-weight: bold;
+}
