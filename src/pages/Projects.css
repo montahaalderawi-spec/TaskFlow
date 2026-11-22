@@ -1,0 +1,128 @@
+ .projects-page {
+  padding: 28px;
+  min-height: 100vh;
+  background: #f5f9f7;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+/* Heading */
+.projects-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.projects-subtitle {
+  color: #45b98a;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+
+.projects-heading h1 {
+  color: #263b35;
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.projects-heading p:last-child {
+  color: #87938e;
+  font-size: 14px;
+}
+
+.new-project-btn {
+  background: #249d70;
+  color: white;
+  border: none;
+  padding: 13px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Statistics */
+.projects-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 35px;
+}
+
+/* Projects Title */
+.projects-section-title {
+  margin-bottom: 20px;
+}
+
+.projects-section-title h2 {
+  color: #263b35;
+  font-size: 22px;
+  margin-bottom: 7px;
+}
+
+.projects-section-title p {
+  color: #87938e;
+  font-size: 14px;
+}
+
+/* Projects Grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-bottom: 30px;
+}
+
+/* Lower Sections */
+.projects-lower-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.projects-lower-grid > * {
+  margin: 0 !important;
+  box-sizing: border-box; /* هاد اللي بيمنع التداخل تماماً */
+  height: auto; /* أو احذفي سطر height: 100% */
+}
+.activity-header,
+.activity-info,
+.assigned-header,
+.task-details,
+.people-header,
+.person-info {
+  text-align: left;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .projects-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .projects-page {
+    padding: 16px;
+  }
+
+  .projects-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .projects-grid,
+  .projects-lower-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 450px) {
+  .projects-stats {
+    grid-template-columns: 1fr;
+  }
+}

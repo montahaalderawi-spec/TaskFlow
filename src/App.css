@@ -307,3 +307,35 @@ body.dark-mode .recent-tasks-card .task-text,
 body.dark-mode .recent-tasks-card .task-title {
   color: #f3f4f6 !important;
 }
+/* ================= PROJECTS PAGE DARK MODE ================= */
+body.dark-mode .projects-page {
+  background-color: #111827 !important;
+  color: #f3f4f6;
+}
+
+/* كاردات المشاريع والكاردات السفلية (People, RecentActivity, AssignedTasks) */
+body.dark-mode .projects-grid > *,
+body.dark-mode .projects-lower-grid > * {
+  background-color: #1f2937 !important;
+  border-color: #374151 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+  color: #f3f4f6;
+}
+
+/* النصوص والعناوين جوا كاردات لميس */
+body.dark-mode .projects-page h1,
+body.dark-mode .projects-page h2,
+body.dark-mode .projects-page h3,
+body.dark-mode .projects-page h4,
+body.dark-mode .projects-page strong {
+  color: #f9fafb !important;
+}
+
+body.dark-mode .projects-page p {
+  color: #9ca3af;
+}
+
+/* الخطوط الفاصلة بين العناصر جوا Recent Activity و Assigned Tasks */
+body.dark-mode .projects-lower-grid > * * {
+  border-color: #374151 !important;
+}

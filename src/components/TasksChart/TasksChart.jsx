@@ -2,7 +2,7 @@ import React from 'react'
 import {PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer}from 'recharts';
 import './TasksChart.css';
 const COLORS = ['#2ecc71', '#f39c12'];
-const TasksChart = React.memo (({ data }) => {
+const TasksChart = React.memo (({ data = []}) => {
   return (
    <div className="chart-card">
       <h3 className="chart-title">Tasks Distribution</h3>
