@@ -76,3 +76,83 @@
   color: #ffffff;
   border-color: rgba(255, 255, 255, 0.25);
 }
+/* هيدر السايدبار وأزرار الموبايل (مخفية على الديسكتوب) */
+.sidebar-header {
+  position: relative;
+}
+
+.mobile-menu-btn,
+.mobile-close-btn,
+.sidebar-overlay {
+  display: none;
+}
+
+/* ================= تجاوب الموبايل ================= */
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 998;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid #dce1e7;
+    background-color: #ffffff;
+    color: #2c3e50;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  body.dark-mode .mobile-menu-btn {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.35);
+  }
+
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  .mobile-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    color: #ecf0f1;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  /* إزاحة بسيطة للناف بار عشان زر القائمة ما يغطي على النص */
+  .navbar {
+    padding-left: 65px !important;
+  }
+}

@@ -56,6 +56,7 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
+  outline: none;
 }
 
 .notif-btn:hover {
@@ -140,4 +141,126 @@
 .user-role {
   font-size: 12px;
   color: #7f8c8d;
+}
+/* قائمة الإشعارات المنسدلة */
+.notif-wrapper {
+  position: relative;
+}
+
+.notif-btn.active {
+  background-color: #ebf5fb;
+  color: #3498db;
+  border-color: #d6eaf8;
+}
+
+.notif-dropdown {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  width: 310px;
+  background-color: #ffffff;
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.notif-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.notif-header h4 {
+  margin: 0;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+.mark-read-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: #3498db;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.mark-read-btn:hover {
+  text-decoration: underline;
+}
+
+.notif-list {
+  max-height: 300px;
+  overflow-y: auto;
+  
+}
+
+.notif-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f4f6f9;
+  transition: background-color 0.2s ease;
+  text-align: left;
+}
+
+.notif-item:hover {
+  background-color: #f8f9fa;
+}
+
+.notif-item.unread {
+  background-color: #f0f8ff;
+  border-left: 3px solid #3498db;
+}
+
+.notif-text {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+  color: #2c3e50;
+  line-height: 1.4;
+}
+
+.notif-time {
+  font-size: 11px;
+  color: #95a5a6;
+}
+
+.notif-footer {
+  padding: 10px 16px;
+  text-align: center;
+  background-color: #fafbfc;
+}
+
+.notif-footer a {
+  font-size: 12px;
+  font-weight: 600;
+  color: #3498db;
+  text-decoration: none;
+}
+
+.notif-footer a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 768px) {
+  .navbar {
+    height: auto !important;
+    min-height: 70px;
+    padding: 12px 15px 12px 65px !important;
+    justify-content: flex-end !important;
+  }
+
+  /* إخفاء الترحيب والتاريخ على الموبايل عشان ما يصير تداخل */
+  .navbar > div:first-child {
+    display: none !important;
+  }
+
+  .user-info {
+    display: none !important;
+  }
 }

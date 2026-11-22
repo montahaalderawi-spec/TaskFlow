@@ -182,3 +182,128 @@
     border-right-color: var(--border);
   }
 }
+/* ================= DARK MODE ================= */
+body.dark-mode {
+  background-color: #111827;
+  color: #f3f4f6;
+}
+
+body.dark-mode .main-content,
+body.dark-mode .dashboard-container {
+  background-color: #111827;
+}
+
+body.dark-mode .navbar {
+  background-color: #1f2937;
+  border-bottom-color: #374151;
+}
+
+body.dark-mode .navbar-welcome,
+body.dark-mode .user-name,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4 {
+  color: #f9fafb;
+}
+
+body.dark-mode .navbar-date,
+body.dark-mode .user-role {
+  color: #9ca3af;
+}
+
+body.dark-mode .notif-btn {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #e5e7eb;
+}
+
+body.dark-mode .notif-btn:hover {
+  background-color: #4b5563;
+  color: #60a5fa;
+}
+
+body.dark-mode .notif-dropdown {
+  background-color: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .notif-header,
+body.dark-mode .notif-item {
+  border-bottom-color: #374151;
+}
+
+body.dark-mode .notif-item:hover {
+  background-color: #2d3748;
+}
+
+body.dark-mode .notif-item.unread {
+  background-color: rgba(52, 152, 219, 0.15);
+}
+
+body.dark-mode .notif-text {
+  color: #e5e7eb;
+}
+
+body.dark-mode .notif-footer {
+  background-color: #111827;
+}
+
+/* كروت الداشبورد */
+body.dark-mode .stat-card,
+body.dark-mode .progress-section,
+body.dark-mode .chart-card,
+body.dark-mode .recent-tasks-card {
+  background-color: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-mode .stat-card p,
+body.dark-mode .task-item {
+  color: #e5e7eb;
+  border-color: #374151;
+}
+
+body.dark-mode .filter-btn:not(.active) {
+  background-color: #374151;
+  color: #d1d5db;
+}
+/* توضيح نص شريط التقدم بالدارك مود */
+body.dark-mode .progress-section span,
+body.dark-mode .progress-header,
+body.dark-mode .progress-title {
+  color: #f3f4f6;
+}
+body.dark-mode .progress-bar-bg,
+body.dark-mode .progress-bar {
+  background-color: #374151;
+}
+/* كروت المهام في Recent Tasks بالدارك مود */
+body.dark-mode .task-item,
+body.dark-mode .recent-task-item,
+body.dark-mode .task-row {
+  background-color: #263244;
+  border-color: #374151;
+  color: #f3f4f6;
+}
+
+/* كروت الفريق في Our Team بالدارك مود */
+body.dark-mode .team-card,
+body.dark-mode .member-card {
+  background-color: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-mode .team-card p,
+body.dark-mode .member-card p {
+  color: #9ca3af;
+}
+body.dark-mode .recent-tasks-card .task-item span:first-child,
+body.dark-mode .recent-tasks-card .task-item p,
+body.dark-mode .recent-tasks-card .task-text,
+body.dark-mode .recent-tasks-card .task-title {
+  color: #f3f4f6 !important;
+}
