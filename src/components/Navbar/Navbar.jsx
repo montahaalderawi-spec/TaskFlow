@@ -5,8 +5,8 @@ import { Bell, Calendar, CheckCheck, Sun, Moon } from 'lucide-react';
 import { UserContext } from '../../context/UserContext';
 import './Navbar.css';
 
-const Navbar = React.memo (() => {
-  const { userName, darkMode, toggleDarkMode } = useContext(UserContext);
+const Navbar = React.memo(() => {
+  const { userName, userRole, darkMode, toggleDarkMode } = useContext(UserContext);
   const [showNotifs, setShowNotifs] = useState(false);
   const [notifications, setNotifications] = useState([
     {
@@ -34,15 +34,16 @@ const Navbar = React.memo (() => {
   const markAllAsRead = () => {
     setNotifications(notifications.map((n) => ({ ...n, read: true })));
   };
+
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     month: 'short',
     day: 'numeric',
     year: 'numeric',
   });
-  
+
   return (
-   <header className="navbar">
+    <header className="navbar">
       <div className="navbar-left">
         <h2 className="navbar-welcome">Welcome back, {userName}</h2>
         <span className="navbar-date">
@@ -53,12 +54,13 @@ const Navbar = React.memo (() => {
 
       <div className="navbar-right">
         <button
-           className="notif-btn theme-btn"
-           title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-           onClick={toggleDarkMode}
-           >
-           {darkMode ? <Sun size={19} /> : <Moon size={19} />}
-           </button>
+          className="notif-btn theme-btn"
+          title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          onClick={toggleDarkMode}
+        >
+          {darkMode ? <Sun size={19} /> : <Moon size={19} />}
+        </button>
+
         <div className="notif-wrapper">
           <button
             className={`notif-btn ${showNotifs ? 'active' : ''}`}
@@ -113,12 +115,12 @@ const Navbar = React.memo (() => {
           </div>
           <div className="user-info">
             <p className="user-name">{userName}</p>
-            <span className="user-role">Admin</span>
+            <span className="user-role">{userRole || 'Admin'}</span>
           </div>
         </Link>
       </div>
     </header>
-  )
-})
+  );
+});
 
-export default Navbar
+export default Navbar;
