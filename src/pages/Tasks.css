@@ -35,6 +35,11 @@
   font: inherit;
 }
 
+.tasks-page input[type="date"] {
+  direction: ltr;
+  text-align: left;
+  font-family: Arial, sans-serif;
+}
 .tasks-page button {
   cursor: pointer;
 }
@@ -2433,6 +2438,7 @@
 .dark .tasks-page,
 [data-theme="dark"] .tasks-page,
 body.dark-mode .tasks-page {
+  color-scheme: dark;
   --page-bg: transparent;
   --white: #101d2b;
   --navy: #f1f5f9;
