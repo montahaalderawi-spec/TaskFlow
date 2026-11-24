@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback, useRef } from "react";
 import "./Tasks.css";
 
@@ -15,19 +16,32 @@ function Tasks() {
   const [newPriority, setNewPriority] = useState("medium");
   const [newCategory, setNewCategory] = useState("Personal");
   const [newDueDate, setNewDueDate] = useState("");
+  const [showAddForm, setShowAddForm] = useState(false);
+
   const newTaskInputRef = useRef(null);
 
   const [taskMeta, setTaskMeta] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem("taskflow-task-meta") || "{}");
+      return JSON.parse(
+        localStorage.getItem("taskflow-task-meta") || "{}"
+      );
     } catch {
       return {};
     }
   });
 
   useEffect(() => {
-    localStorage.setItem("taskflow-task-meta", JSON.stringify(taskMeta));
+    localStorage.setItem(
+      "taskflow-task-meta",
+      JSON.stringify(taskMeta)
+    );
   }, [taskMeta]);
+
+  useEffect(() => {
+    if (showAddForm) {
+      newTaskInputRef.current?.focus();
+    }
+  }, [showAddForm]);
 
   const updateTaskMeta = (id, changes) => {
     setTaskMeta((previous) => ({
@@ -46,11 +60,10 @@ function Tasks() {
     setNewDueDate("");
     setFilter("all");
     setSearch("");
-
-    newTaskInputRef.current?.focus();
+    setError("");
+    setShowAddForm(true);
   };
 
-  // Fetch tasks and register previously completed tasks
   const fetchTasks = useCallback(async () => {
     try {
       setLoading(true);
@@ -66,15 +79,15 @@ function Tasks() {
       const fetchedTasks = data.todos || [];
 
       setTasks(fetchedTasks);
-
-      // Tasks already completed by the API have no completion date.
-      // Register them once so they can appear in weekly activity.
       setTaskMeta((previous) => {
         const updatedMeta = { ...previous };
         const today = new Date().toISOString();
 
         fetchedTasks.forEach((task) => {
-          if (task.completed && !updatedMeta[task.id]?.completedAt) {
+          if (
+            task.completed &&
+            !updatedMeta[task.id]?.completedAt
+          ) {
             updatedMeta[task.id] = {
               ...(updatedMeta[task.id] || {}),
               completedAt: today,
@@ -94,8 +107,6 @@ function Tasks() {
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
-
-  // Add a new task
   const addTask = useCallback(
     (e) => {
       e.preventDefault();
@@ -115,7 +126,10 @@ function Tasks() {
         isLocal: true,
       };
 
-      setTasks((previousTasks) => [createdTask, ...previousTasks]);
+      setTasks((previousTasks) => [
+        createdTask,
+        ...previousTasks,
+      ]);
 
       setTaskMeta((previous) => ({
         ...previous,
@@ -135,20 +149,24 @@ function Tasks() {
       setFilter("all");
       setSearch("");
       setError("");
+      setShowAddForm(false);
     },
-    [newTask, newPriority, newCategory, newDueDate],
+    [newTask, newPriority, newCategory, newDueDate]
   );
-
-  // Complete or uncomplete a task
   const toggleTask = useCallback(async (task) => {
     const completed = !task.completed;
-    const completedAt = completed ? new Date().toISOString() : null;
+
+    const completedAt = completed
+      ? new Date().toISOString()
+      : null;
 
     if (task.isLocal) {
       setTasks((previousTasks) =>
         previousTasks.map((item) =>
-          item.id === task.id ? { ...item, completed } : item,
-        ),
+          item.id === task.id
+            ? { ...item, completed }
+            : item
+        )
       );
 
       updateTaskMeta(task.id, { completedAt });
@@ -172,8 +190,10 @@ function Tasks() {
 
       setTasks((previousTasks) =>
         previousTasks.map((item) =>
-          item.id === task.id ? { ...item, ...updatedTask } : item,
-        ),
+          item.id === task.id
+            ? { ...item, ...updatedTask }
+            : item
+        )
       );
 
       updateTaskMeta(task.id, { completedAt });
@@ -183,20 +203,23 @@ function Tasks() {
     }
   }, []);
 
-  // Edit a task
   const updateTask = useCallback(
     async (id) => {
       const updatedText = editText.trim();
 
       if (!updatedText) return;
 
-      const currentTask = tasks.find((task) => task.id === id);
+      const currentTask = tasks.find(
+        (task) => task.id === id
+      );
 
       if (currentTask?.isLocal) {
         setTasks((previousTasks) =>
           previousTasks.map((task) =>
-            task.id === id ? { ...task, todo: updatedText } : task,
-          ),
+            task.id === id
+              ? { ...task, todo: updatedText }
+              : task
+          )
         );
 
         setEditingId(null);
@@ -224,8 +247,10 @@ function Tasks() {
 
         setTasks((previousTasks) =>
           previousTasks.map((task) =>
-            task.id === id ? { ...task, ...updatedTask } : task,
-          ),
+            task.id === id
+              ? { ...task, ...updatedTask }
+              : task
+          )
         );
 
         setEditingId(null);
@@ -235,21 +260,27 @@ function Tasks() {
         setError("Unable to edit task. Please try again.");
       }
     },
-    [editText, tasks],
+    [editText, tasks]
   );
-
-  // Delete a task
   const deleteTask = useCallback(
     async (id) => {
-      if (!window.confirm("Are you sure you want to delete this task?")) {
+      if (
+        !window.confirm(
+          "Are you sure you want to delete this task?"
+        )
+      ) {
         return;
       }
 
-      const currentTask = tasks.find((task) => task.id === id);
+      const currentTask = tasks.find(
+        (task) => task.id === id
+      );
 
       if (currentTask?.isLocal) {
         setTasks((previousTasks) =>
-          previousTasks.filter((task) => task.id !== id),
+          previousTasks.filter(
+            (task) => task.id !== id
+          )
         );
 
         setTaskMeta((previous) => {
@@ -274,7 +305,9 @@ function Tasks() {
         await response.json();
 
         setTasks((previousTasks) =>
-          previousTasks.filter((task) => task.id !== id),
+          previousTasks.filter(
+            (task) => task.id !== id
+          )
         );
 
         setTaskMeta((previous) => {
@@ -288,7 +321,7 @@ function Tasks() {
         setError("Unable to delete task. Please try again.");
       }
     },
-    [tasks],
+    [tasks]
   );
 
   const startEditing = (task) => {
@@ -302,43 +335,52 @@ function Tasks() {
   };
 
   // Task statistics
-  const completedCount = tasks.filter((task) => task.completed).length;
+  const completedCount = tasks.filter(
+    (task) => task.completed
+  ).length;
 
   const pendingCount = tasks.length - completedCount;
 
   const progress = tasks.length
-    ? Math.round((completedCount / tasks.length) * 100)
+    ? Math.round(
+        (completedCount / tasks.length) * 100
+      )
     : 0;
-
-  // Weekly activity
-  const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const weekDays = [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+  ];
 
   const today = new Date();
 
   const weeklyActivity = weekDays.map((day, index) => {
     const date = new Date(today);
 
-    date.setDate(today.getDate() - ((today.getDay() - index + 7) % 7));
+    date.setDate(
+      today.getDate() -
+        ((today.getDay() - index + 7) % 7)
+    );
 
     const key = date.toDateString();
 
     const count = Object.values(taskMeta).filter(
       (meta) =>
-        meta.completedAt && new Date(meta.completedAt).toDateString() === key,
+        meta.completedAt &&
+        new Date(meta.completedAt).toDateString() === key
     ).length;
 
-    return {
-      day,
-      count,
-    };
+    return { day, count };
   });
 
   const maxWeeklyActivity = Math.max(
     1,
-    ...weeklyActivity.map((item) => item.count),
+    ...weeklyActivity.map((item) => item.count)
   );
-
-  // Search and filter
   const filteredTasks = tasks.filter((task) => {
     const matchesSearch = task.todo
       .toLowerCase()
@@ -355,22 +397,29 @@ function Tasks() {
   return (
     <main className="tasks-page">
       <div className="tasks-page__container">
+
         {/* Header */}
         <header className="tasks-page__header">
           <div className="tasks-page__brand">
-            <span className="tasks-page__brand-mark">T</span>
+            <span className="tasks-page__brand-mark">
+              T
+            </span>
             <span>Task Space</span>
           </div>
 
           <div className="tasks-page__welcome">
-            <span className="tasks-page__eyebrow">YOUR DAILY WORKSPACE</span>
+            <span className="tasks-page__eyebrow">
+              YOUR DAILY WORKSPACE
+            </span>
 
             <h1>
-              One step at a time, <span>achieve more.</span>
+              One step at a time,{" "}
+              <span>achieve more.</span>
             </h1>
 
             <p>
-              Organize your priorities and track your progress in one place.
+              Organize your priorities and track your
+              progress in one place.
             </p>
           </div>
 
@@ -379,17 +428,21 @@ function Tasks() {
             <span>Task Dashboard</span>
           </div>
         </header>
-
-        {/* Overview */}
-        <section className="tasks-page__overview" aria-label="Tasks overview">
+        <section
+          className="tasks-page__overview"
+          aria-label="Tasks overview"
+        >
           <div className="tasks-page__overview-main">
             <div className="tasks-page__overview-copy">
-              <span className="tasks-page__eyebrow">OVERVIEW</span>
+              <span className="tasks-page__eyebrow">
+                OVERVIEW
+              </span>
 
               <h2>Your Progress So Far</h2>
 
               <p>
-                Keep going. Every completed task brings you closer to your goal.
+                Keep going. Every completed task brings
+                you closer to your goal.
               </p>
             </div>
 
@@ -408,7 +461,9 @@ function Tasks() {
 
           <div className="tasks-page__metrics">
             <div className="tasks-page__metric">
-              <span className="tasks-page__metric-icon">▤</span>
+              <span className="tasks-page__metric-icon">
+                ▤
+              </span>
 
               <div>
                 <span>Total Tasks</span>
@@ -417,7 +472,9 @@ function Tasks() {
             </div>
 
             <div className="tasks-page__metric">
-              <span className="tasks-page__metric-icon is-done">✓</span>
+              <span className="tasks-page__metric-icon is-done">
+                ✓
+              </span>
 
               <div>
                 <span>Completed</span>
@@ -426,7 +483,9 @@ function Tasks() {
             </div>
 
             <div className="tasks-page__metric">
-              <span className="tasks-page__metric-icon is-pending">◷</span>
+              <span className="tasks-page__metric-icon is-pending">
+                ◷
+              </span>
 
               <div>
                 <span>In Progress</span>
@@ -435,12 +494,15 @@ function Tasks() {
             </div>
           </div>
         </section>
-
-        {/* Weekly Activity */}
-        <section className="tasks-page__activity" aria-label="Weekly activity">
+        <section
+          className="tasks-page__activity"
+          aria-label="Weekly activity"
+        >
           <div className="tasks-page__activity-heading">
             <div>
-              <span className="tasks-page__eyebrow">YOUR MOMENTUM</span>
+              <span className="tasks-page__eyebrow">
+                YOUR MOMENTUM
+              </span>
 
               <h2>Weekly Activity</h2>
             </div>
@@ -450,33 +512,42 @@ function Tasks() {
 
           <div className="tasks-page__activity-chart">
             {weeklyActivity.map((item) => (
-              <div className="tasks-page__activity-day" key={item.day}>
-                <span className="tasks-page__activity-value">{item.count}</span>
+              <div
+                className="tasks-page__activity-day"
+                key={item.day}
+              >
+                <span className="tasks-page__activity-value">
+                  {item.count}
+                </span>
 
                 <div className="tasks-page__activity-track">
                   <span
                     style={{
-                      height: `${(item.count / maxWeeklyActivity) * 100}%`,
+                      height: `${
+                        (item.count / maxWeeklyActivity) * 100
+                      }%`,
                     }}
                   />
                 </div>
 
-                <span className="tasks-page__activity-label">{item.day}</span>
+                <span className="tasks-page__activity-label">
+                  {item.day}
+                </span>
               </div>
             ))}
           </div>
 
           <p className="tasks-page__activity-note">
-            Activity is tracked on this device from the moment you complete a
-            task.
+            Activity is tracked on this device from the
+            moment you complete a task.
           </p>
         </section>
-
-        {/* Tasks Workspace */}
         <section className="tasks-page__workspace">
           <div className="tasks-page__workspace-heading">
             <div>
-              <span className="tasks-page__eyebrow">WORK LIST</span>
+              <span className="tasks-page__eyebrow">
+                WORK LIST
+              </span>
 
               <h2>My Tasks</h2>
             </div>
@@ -493,68 +564,79 @@ function Tasks() {
               + Create New Task
             </button>
           </div>
+          {showAddForm && (
+            <form
+              className="tasks-page__add-panel"
+              onSubmit={addTask}
+            >
+              <div className="tasks-page__add-symbol">
+                ＋
+              </div>
 
-          {/* Add Task Form */}
-          <form className="tasks-page__add-panel" onSubmit={addTask}>
-            <div className="tasks-page__add-symbol">＋</div>
-
-            <label className="tasks-page__add-field">
-              <span>Add a New Task</span>
-
-              <input
-                ref={newTaskInputRef}
-                type="text"
-                value={newTask}
-                onChange={(e) => setNewTask(e.target.value)}
-                placeholder="What do you want to accomplish?"
-                aria-label="New task"
-              />
-            </label>
-
-            <div className="tasks-page__add-options">
-              <label>
-                <span>Priority</span>
-
-                <select
-                  value={newPriority}
-                  onChange={(e) => setNewPriority(e.target.value)}
-                >
-                  <option value="high">High</option>
-                  <option value="medium">Medium</option>
-                  <option value="low">Low</option>
-                </select>
-              </label>
-
-              <label>
-                <span>Category</span>
-
-                <select
-                  value={newCategory}
-                  onChange={(e) => setNewCategory(e.target.value)}
-                >
-                  <option>Personal</option>
-                  <option>Study</option>
-                  <option>Work</option>
-                </select>
-              </label>
-
-              <label>
-                <span>Due date</span>
+              <label className="tasks-page__add-field">
+                <span>Add a New Task</span>
 
                 <input
-                  type="date"
-                  value={newDueDate}
-                  onChange={(e) => setNewDueDate(e.target.value)}
+                  ref={newTaskInputRef}
+                  type="text"
+                  value={newTask}
+                  onChange={(e) =>
+                    setNewTask(e.target.value)
+                  }
+                  placeholder="What do you want to accomplish?"
+                  aria-label="New task"
                 />
               </label>
-            </div>
 
-            <button type="submit">
-              Add Task <span>←</span>
-            </button>
-          </form>
+              <div className="tasks-page__add-options">
+                <label>
+                  <span>Priority</span>
 
-          {/* Search and Filters */}
+                  <select
+                    value={newPriority}
+                    onChange={(e) =>
+                      setNewPriority(e.target.value)
+                    }
+                  >
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                  </select>
+                </label>
+
+                <label>
+                  <span>Category</span>
+
+                  <select
+                    value={newCategory}
+                    onChange={(e) =>
+                      setNewCategory(e.target.value)
+                    }
+                  >
+                    <option>Personal</option>
+                    <option>Study</option>
+                    <option>Work</option>
+                  </select>
+                </label>
+
+                <label>
+                  <span>Due date</span>
+
+                  <input
+                    type="date"
+                    value={newDueDate}
+                    onChange={(e) =>
+                      setNewDueDate(e.target.value)
+                    }
+                  />
+                </label>
+              </div>
+
+              <button type="submit">
+                Add Task <span>←</span>
+              </button>
+            </form>
+          )}
           <div className="tasks-page__controls">
             <label className="tasks-page__search">
               <span>⌕</span>
@@ -563,15 +645,22 @@ function Tasks() {
                 type="search"
                 placeholder="Search your tasks..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) =>
+                  setSearch(e.target.value)
+                }
                 aria-label="Search tasks"
               />
             </label>
 
-            <div className="tasks-page__filters" aria-label="Filter tasks">
+            <div
+              className="tasks-page__filters"
+              aria-label="Filter tasks"
+            >
               <button
                 type="button"
-                className={filter === "all" ? "active" : ""}
+                className={
+                  filter === "all" ? "active" : ""
+                }
                 onClick={() => setFilter("all")}
               >
                 All
@@ -579,7 +668,9 @@ function Tasks() {
 
               <button
                 type="button"
-                className={filter === "pending" ? "active" : ""}
+                className={
+                  filter === "pending" ? "active" : ""
+                }
                 onClick={() => setFilter("pending")}
               >
                 In Progress
@@ -587,26 +678,30 @@ function Tasks() {
 
               <button
                 type="button"
-                className={filter === "completed" ? "active" : ""}
+                className={
+                  filter === "completed" ? "active" : ""
+                }
                 onClick={() => setFilter("completed")}
               >
                 Completed
               </button>
             </div>
           </div>
-
-          {/* Error Message */}
           {error && (
-            <div className="tasks-page__error" role="alert">
+            <div
+              className="tasks-page__error"
+              role="alert"
+            >
               <span>{error}</span>
 
-              <button type="button" onClick={fetchTasks}>
+              <button
+                type="button"
+                onClick={fetchTasks}
+              >
                 Try Again
               </button>
             </div>
           )}
-
-          {/* Tasks List */}
           {loading ? (
             <div className="tasks-page__message">
               <div className="tasks-page__loader" />
@@ -614,11 +709,16 @@ function Tasks() {
             </div>
           ) : filteredTasks.length === 0 ? (
             <div className="tasks-page__empty">
-              <span className="tasks-page__empty-icon">✦</span>
+              <span className="tasks-page__empty-icon">
+                ✦
+              </span>
 
               <h3>No Tasks Here</h3>
 
-              <p>Add a new task or try changing your search and filters.</p>
+              <p>
+                Add a new task or try changing your
+                search and filters.
+              </p>
             </div>
           ) : (
             <div className="tasks-page__list">
@@ -632,8 +732,6 @@ function Tasks() {
                   <span className="tasks-page__task-number">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-
-                  {/* Complete Button */}
                   <button
                     type="button"
                     className={`tasks-page__check ${
@@ -645,7 +743,11 @@ function Tasks() {
                         ? "Mark task as in progress"
                         : "Mark task as completed"
                     }
-                    title={task.completed ? "Undo completion" : "Complete task"}
+                    title={
+                      task.completed
+                        ? "Undo completion"
+                        : "Complete task"
+                    }
                   >
                     {task.completed ? "✓" : ""}
                   </button>
@@ -661,12 +763,17 @@ function Tasks() {
                       >
                         <input
                           value={editText}
-                          onChange={(e) => setEditText(e.target.value)}
+                          onChange={(e) =>
+                            setEditText(e.target.value)
+                          }
                           autoFocus
                           aria-label="Edit task text"
                         />
 
-                        <button type="submit" disabled={!editText.trim()}>
+                        <button
+                          type="submit"
+                          disabled={!editText.trim()}
+                        >
                           Save
                         </button>
 
@@ -685,42 +792,51 @@ function Tasks() {
                         <div className="tasks-page__task-details">
                           <span
                             className={`tasks-page__status ${
-                              task.completed ? "completed" : "pending"
+                              task.completed
+                                ? "completed"
+                                : "pending"
                             }`}
                           >
                             <i />
-                            {task.completed ? "Completed" : "In Progress"}
+                            {task.completed
+                              ? "Completed"
+                              : "In Progress"}
                           </span>
 
                           <span
                             className={`tasks-page__priority priority-${
-                              taskMeta[task.id]?.priority || "medium"
+                              taskMeta[task.id]?.priority ||
+                              "medium"
                             }`}
                           >
-                            {taskMeta[task.id]?.priority || "Medium"} priority
+                            {taskMeta[task.id]?.priority ||
+                              "Medium"}{" "}
+                            priority
                           </span>
 
                           <span className="tasks-page__category">
-                            {taskMeta[task.id]?.category || "Personal"}
+                            {taskMeta[task.id]?.category ||
+                              "Personal"}
                           </span>
 
                           {taskMeta[task.id]?.dueDate && (
                             <span className="tasks-page__due-date">
                               Due{" "}
                               {new Date(
-                                `${taskMeta[task.id].dueDate}T00:00:00`,
+                                `${taskMeta[task.id].dueDate}T00:00:00`
                               ).toLocaleDateString()}
                             </span>
                           )}
                         </div>
-
-                        {/* Task Metadata Controls */}
                         <div className="tasks-page__task-meta-controls">
                           <label>
                             <span>Priority</span>
 
                             <select
-                              value={taskMeta[task.id]?.priority || "medium"}
+                              value={
+                                taskMeta[task.id]?.priority ||
+                                "medium"
+                              }
                               onChange={(e) =>
                                 updateTaskMeta(task.id, {
                                   priority: e.target.value,
@@ -738,7 +854,10 @@ function Tasks() {
                             <span>Category</span>
 
                             <select
-                              value={taskMeta[task.id]?.category || "Personal"}
+                              value={
+                                taskMeta[task.id]?.category ||
+                                "Personal"
+                              }
                               onChange={(e) =>
                                 updateTaskMeta(task.id, {
                                   category: e.target.value,
@@ -757,7 +876,9 @@ function Tasks() {
 
                             <input
                               type="date"
-                              value={taskMeta[task.id]?.dueDate || ""}
+                              value={
+                                taskMeta[task.id]?.dueDate || ""
+                              }
                               onChange={(e) =>
                                 updateTaskMeta(task.id, {
                                   dueDate: e.target.value,
@@ -770,8 +891,6 @@ function Tasks() {
                       </>
                     )}
                   </div>
-
-                  {/* Edit and Delete Buttons */}
                   {editingId !== task.id && (
                     <div className="tasks-page__actions">
                       <button

@@ -31,8 +31,10 @@
 }
 
 .tasks-page button,
-.tasks-page input {
-  font: inherit;
+.tasks-page input[type="date"] {
+  direction: ltr;
+  text-align: left;
+  font-family: Arial, sans-serif;
 }
 
 .tasks-page button {
@@ -2270,7 +2272,6 @@
   }
 }
 
-/* Fix overview statistics text overlap */
 
 .tasks-page__metric {
   flex: 1 1 0;
