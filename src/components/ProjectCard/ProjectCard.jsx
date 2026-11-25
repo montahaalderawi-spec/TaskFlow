@@ -1,11 +1,12 @@
-import React from "react";
+ import React from "react";
 import "./ProjectCard.css";
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project, onEdit, onDelete }) => {
   return (
     <div className="project-card">
       <div className="project-card-header">
         <div className="project-icon">📁</div>
+
         <span className={`project-status ${project.status}`}>
           {project.status}
         </span>
@@ -31,6 +32,23 @@ const ProjectCard = ({ project }) => {
       <div className="project-card-footer">
         <span>👥 {project.members} Members</span>
         <span>📅 {project.deadline}</span>
+      </div>
+
+      <div className="project-card-actions">
+        <button
+          className="edit-project-btn"
+          onClick={() => onEdit(project)}
+        >
+          ✏️ Edit
+        </button>
+
+        <button
+          className="delete-project-btn"
+          onClick={() => onDelete(project.id)}
+          title="Delete project"
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

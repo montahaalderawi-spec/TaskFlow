@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+ import React, { useState } from "react";
 import "./RecentActivity.css";
 
 const RecentActivity = ({ team = [] }) => {
   const [showAll, setShowAll] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("All");
 
   const getMemberName = (index, fallback) => {
     const member = team[index];
-    return member ? `${member.firstName} ${member.lastName}` : fallback;
+    return member
+      ? `${member.firstName} ${member.lastName}`
+      : fallback;
   };
 
   const activities = [
@@ -17,6 +20,7 @@ const RecentActivity = ({ team = [] }) => {
       project: "Website Design",
       time: "10 minutes ago",
       icon: "✓",
+      type: "Tasks",
     },
     {
       id: 2,
@@ -25,6 +29,7 @@ const RecentActivity = ({ team = [] }) => {
       project: "Mobile Application",
       time: "30 minutes ago",
       icon: "+",
+      type: "Tasks",
     },
     {
       id: 3,
@@ -33,6 +38,7 @@ const RecentActivity = ({ team = [] }) => {
       project: "Dashboard System",
       time: "1 hour ago",
       icon: "↻",
+      type: "Projects",
     },
     {
       id: 4,
@@ -41,6 +47,7 @@ const RecentActivity = ({ team = [] }) => {
       project: "TaskFlow",
       time: "2 hours ago",
       icon: "👤",
+      type: "Team",
     },
     {
       id: 5,
@@ -49,6 +56,7 @@ const RecentActivity = ({ team = [] }) => {
       project: "Website Design",
       time: "3 hours ago",
       icon: "⬆",
+      type: "Projects",
     },
     {
       id: 6,
@@ -57,10 +65,22 @@ const RecentActivity = ({ team = [] }) => {
       project: "Dashboard System",
       time: "5 hours ago",
       icon: "✓",
+      type: "Tasks",
     },
   ];
 
-  const visibleActivities = showAll ? activities : activities.slice(0, 4);
+  const filters = ["All", "Tasks", "Projects", "Team"];
+
+  const filteredActivities =
+    activeFilter === "All"
+      ? activities
+      : activities.filter(
+          (activity) => activity.type === activeFilter
+        );
+
+  const visibleActivities = showAll
+    ? filteredActivities
+    : filteredActivities.slice(0, 4);
 
   return (
     <div className="recent-activity">
@@ -70,32 +90,68 @@ const RecentActivity = ({ team = [] }) => {
           <p>Latest team activities</p>
         </div>
 
-        {activities.length > 4 && (
-          <span
+        {filteredActivities.length > 4 && (
+          <button
+            className="activity-view-btn"
             onClick={() => setShowAll(!showAll)}
-            style={{ cursor: "pointer" }}
           >
             {showAll ? "Show Less" : "View All"}
-          </span>
+          </button>
         )}
       </div>
 
-      <div className="activity-list">
-        {visibleActivities.map((activity) => (
-          <div className="activity-item" key={activity.id}>
-            <div className="activity-icon">{activity.icon}</div>
-
-            <div className="activity-info">
-              <p>
-                <strong>{activity.name}</strong> {activity.action}
-              </p>
-
-              <span>{activity.project}</span>
-            </div>
-
-            <small>{activity.time}</small>
-          </div>
+      <div className="activity-filters">
+        {filters.map((filter) => (
+          <button
+            key={filter}
+            className={`activity-filter ${
+              activeFilter === filter ? "active" : ""
+            }`}
+            onClick={() => {
+              setActiveFilter(filter);
+              setShowAll(false);
+            }}
+          >
+            {filter}
+          </button>
         ))}
+      </div>
+
+      <div className="activity-list">
+        {visibleActivities.length > 0 ? (
+          visibleActivities.map((activity) => (
+            <div className="activity-item" key={activity.id}>
+              <div className="activity-timeline">
+                <div className={`activity-icon activity-${activity.type.toLowerCase()}`}>
+                  {activity.icon}
+                </div>
+              </div>
+
+              <div className="activity-info">
+                <p>
+                  <span className="activity-avatar">
+                    {activity.name.charAt(0).toUpperCase()}
+                  </span>
+
+                  <strong>{activity.name}</strong>{" "}
+                  {activity.action}
+                </p>
+
+                <span className="activity-project">
+                  {activity.project}
+                </span>
+              </div>
+
+              <small className="activity-time">
+                {activity.time}
+              </small>
+            </div>
+          ))
+        ) : (
+          <div className="activity-empty">
+            No activities found in this category.
+          </div>
+        )}
       </div>
     </div>
   );

@@ -59,14 +59,12 @@ const AssignedTasks = () => {
           <p>Tasks assigned to your team</p>
         </div>
 
-        {tasks.length > 4 && (
-          <span
-            onClick={() => setShowAll(!showAll)}
-            style={{ cursor: "pointer" }}
-          >
-            {showAll ? "Show Less" : "View All"}
-          </span>
-        )}
+        <button
+          className="assigned-toggle"
+          onClick={() => setShowAll(!showAll)}
+        >
+          {showAll ? "Show Less ↑" : "View All →"}
+        </button>
       </div>
 
       <div className="assigned-list">
@@ -92,6 +90,10 @@ const AssignedTasks = () => {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="assigned-footer">
+        Showing {visibleTasks.length} of {tasks.length} tasks
       </div>
     </div>
   );

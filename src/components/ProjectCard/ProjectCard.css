@@ -69,3 +69,80 @@
   color: #87938e;
   font-size: 12px;
 }
+.project-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #edf0f3;
+}
+
+.edit-project-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 9px;
+  background: #e8f3f3;
+  color: #287c80;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.edit-project-btn:hover {
+  background: #cce6e6;
+}
+
+ .delete-project-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 9px;
+  background: #fff0f0;
+  color: #e05252;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-project-btn:hover {
+  background: #e05252;
+  color: white;
+}
+
+.project-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cancel-project-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 9px;
+  background: #edf0f3;
+  color: #475569;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel-project-btn:hover {
+  background: #dce2e8;
+}
+
+.project-field select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dce5e5;
+  border-radius: 8px;
+  background: white;
+  outline: none;
+  font-size: 14px;
+}
+
+.project-field select:focus {
+  border-color: #287c80;
+}

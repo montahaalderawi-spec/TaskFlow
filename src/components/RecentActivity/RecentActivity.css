@@ -87,3 +87,287 @@
     margin-left: 50px;
   }
 }
+/* Recent Activity Improvements */
+
+.recent-activity {
+  width: 100%;
+  min-width: 0;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.activity-header h3 {
+  margin: 0 0 7px;
+  color: #26364a;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.activity-header p {
+  margin: 0;
+  color: #8994a3;
+  font-size: 14px;
+}
+
+.activity-view-btn {
+  border: none;
+  background: transparent;
+  color: #287c80;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.activity-view-btn:hover {
+  color: #17575a;
+  text-decoration: underline;
+}
+
+/* Filters */
+
+.activity-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.activity-filter {
+  padding: 8px 16px;
+  border: 1px solid #e7eeee;
+  border-radius: 20px;
+  background: #ffffff;
+  color: #788594;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.activity-filter:hover {
+  background: #edf7f7;
+  color: #287c80;
+}
+
+.activity-filter.active {
+  background: #287c80;
+  color: #ffffff;
+  border-color: #287c80;
+}
+
+/* Activity List */
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.activity-item {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 14px;
+  position: relative;
+  padding: 15px 8px;
+  border-bottom: 1px solid #f0f2f4;
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+
+.activity-item:hover {
+  background: #f8fbfb;
+}
+
+.activity-timeline {
+  position: relative;
+  flex-shrink: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.activity-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #e5f3f3;
+  color: #287c80;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.activity-icon.activity-tasks {
+  background: #e4f2f5;
+  color: #328b9c;
+}
+
+.activity-icon.activity-projects {
+  background: #f0eaff;
+  color: #8064c8;
+}
+
+.activity-icon.activity-team {
+  background: #fff1df;
+  color: #d28b37;
+}
+
+.activity-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-info p {
+  display: block;
+  margin: 0 0 7px;
+  color: #526174;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.activity-info strong {
+  color: #26364a;
+  font-weight: 700;
+}
+
+.activity-avatar {
+  display: inline-flex;
+  width: 25px;
+  height: 25px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: #e5f3f3;
+  color: #287c80;
+  font-size: 12px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.activity-project {
+  color: #8994a3;
+  font-size: 13px;
+}
+
+.activity-time {
+  flex-shrink: 0;
+  color: #9aa4b1;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.activity-empty {
+  padding: 30px 12px;
+  text-align: center;
+  color: #8994a3;
+  font-size: 14px;
+  background: #f8fafb;
+  border-radius: 12px;
+}
+
+@media (max-width: 600px) {
+  .recent-activity {
+    padding: 16px;
+  }
+
+  .activity-item {
+    gap: 9px;
+  }
+
+  .activity-time {
+    font-size: 10px;
+  }
+
+  .activity-info p {
+    font-size: 12px;
+  }
+}
+/* Final Activity Layout Improvements */
+
+.activity-header {
+  margin-bottom: 25px;
+}
+
+.activity-header h3 {
+  letter-spacing: -0.4px;
+}
+
+.activity-filters {
+  margin-bottom: 18px;
+}
+
+.activity-item {
+  min-height: 76px;
+  padding: 14px 10px;
+  gap: 13px;
+  border-bottom: 1px solid #edf1f3;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-icon {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  font-size: 20px;
+}
+
+.activity-avatar {
+  width: 29px;
+  height: 29px;
+  font-size: 13px;
+  margin-right: 8px;
+}
+
+.activity-info p {
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.activity-project {
+  display: inline-block;
+  margin-left: 37px;
+}
+
+.activity-time {
+  min-width: 95px;
+  text-align: right;
+  font-size: 11px;
+}
+
+.activity-item:hover {
+  transform: translateX(3px);
+  background: #f5fafa;
+}
+
+.activity-item {
+  transition: background 0.2s, transform 0.2s;
+}
+
+@media (max-width: 700px) {
+  .activity-item {
+    flex-wrap: wrap;
+  }
+
+  .activity-time {
+    margin-left: 59px;
+    text-align: left;
+  }
+}
