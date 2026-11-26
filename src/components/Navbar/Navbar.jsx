@@ -11,21 +11,15 @@ const Navbar = React.memo(() => {
   const [notifications, setNotifications] = useState([
     {
       id: 1,
-      text: 'Welcome to TaskFlow! Your dashboard is ready.',
+      text: 'Welcome to TaskFlow! Your workspace is ready.',
       time: 'Just now',
       read: false,
     },
     {
       id: 2,
-      text: 'You have 15 pending tasks waiting for review.',
+      text: 'Check your pending tasks and team updates.',
       time: '2 hours ago',
       read: false,
-    },
-    {
-      id: 3,
-      text: 'Overall completion rate reached 50%.',
-      time: 'Yesterday',
-      read: true,
     },
   ]);
 

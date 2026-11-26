@@ -142,6 +142,7 @@
   font-size: 12px;
   color: #7f8c8d;
 }
+
 /* قائمة الإشعارات المنسدلة */
 .notif-wrapper {
   position: relative;
@@ -200,7 +201,6 @@
 .notif-list {
   max-height: 300px;
   overflow-y: auto;
-  
 }
 
 .notif-item {
@@ -247,6 +247,7 @@
 .notif-footer a:hover {
   text-decoration: underline;
 }
+
 @media (max-width: 768px) {
   .navbar {
     height: auto !important;
@@ -262,5 +263,16 @@
 
   .user-info {
     display: none !important;
+  }
+
+  .notif-dropdown {
+    position: fixed;
+    top: 72px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: calc(100vw - 24px);
+    max-height: 70vh;
+    z-index: 200;
   }
 }
