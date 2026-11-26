@@ -15,7 +15,7 @@
   --shadow: 0 4px 14px rgba(44, 64, 84, .07);
 
   min-height: 100vh;
-  padding: 35px 28px;
+  padding: 0px 28px 28px;
   background: var(--page-bg);
   color: var(--text);
   font-family: "Cairo", sans-serif;
@@ -95,10 +95,12 @@
 .tasks-page__welcome h1 {
   margin: 8px 0 4px;
   color: var(--navy);
-  font-size: clamp(23px, 3vw, 34px);
+  font-size: clamp(20px, 2.2vw, 28px);
   line-height: 1.4;
-  font-weight: 800;
+  font-weight: 600;
+  white-space: nowrap;
 }
+
 
 .tasks-page__welcome h1 span {
   color: var(--blue);
@@ -156,7 +158,7 @@
   margin: 6px 0 3px;
   color: var(--navy);
   font-size: 23px;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .tasks-page__overview-copy p {
@@ -294,7 +296,7 @@
   margin: 3px 0 0;
   color: var(--navy);
   font-size: 24px;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .tasks-page__task-count {
@@ -783,7 +785,7 @@
   margin: 4px 0 0;
   color: var(--navy);
   font-size: 22px;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .tasks-page__activity-heading p,
@@ -928,7 +930,7 @@
 
 @media (min-width: 1200px) {
   .tasks-page {
-    padding: 48px 32px 36px;
+    padding: 16px 32px 36px;
   }
 
   .tasks-page__container {
@@ -989,8 +991,9 @@
   }
 
   .tasks-page__welcome h1 {
-    font-size: clamp(23px, 5vw, 32px);
-  }
+   font-size: clamp(23px, 5vw, 32px);
+    white-space: normal; 
+   }
 
   .tasks-page__overview {
     padding: 22px;
@@ -2485,4 +2488,8 @@ body.dark-mode .tasks-page__add-panel,
 body.dark-mode .tasks-page__filters,
 body.dark-mode .tasks-page__task:hover {
   background: #162436;
+}
+.tasks-page {
+  padding-top: 18px !important;
+  margin-top: 0 !important;
 }

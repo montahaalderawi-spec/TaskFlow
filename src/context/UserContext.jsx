@@ -6,9 +6,15 @@ export const UserProvider = ({ children }) => {
   const [userName, setUserName] = useState(() => {
     return localStorage.getItem('taskflow_user') || '';
   });
+
+  const [userRole, setUserRole] = useState(() => {
+    return localStorage.getItem('taskflow_role') || 'Admin';
+  });
+
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('taskflow_theme') === 'dark';
   });
+
   useEffect(() => {
     if (userName) {
       localStorage.setItem('taskflow_user', userName);
@@ -16,6 +22,13 @@ export const UserProvider = ({ children }) => {
       localStorage.removeItem('taskflow_user');
     }
   }, [userName]);
+
+  useEffect(() => {
+    if (userRole) {
+      localStorage.setItem('taskflow_role', userRole);
+    }
+  }, [userRole]);
+
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add('dark-mode');
@@ -31,7 +44,16 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ userName, setUserName, darkMode, toggleDarkMode }}>
+    <UserContext.Provider
+      value={{
+        userName,
+        setUserName,
+        userRole,
+        setUserRole,
+        darkMode,
+        toggleDarkMode,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

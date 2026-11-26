@@ -1,0 +1,356 @@
+.team-page {
+  --t-bg: #f8fafc;
+  --t-card: #ffffff;
+  --t-text: #1e293b;
+  --t-muted: #64748b;
+  --t-border: #e2e8f0;
+  --t-primary: #4f46e5;
+  --t-primary-hover: #4338ca;
+  --t-input-bg: #ffffff;
+
+  padding: 0 24px 24px;
+  margin-top: -24px; 
+  color: var(--t-text);
+  
+}
+
+body.dark-mode .team-page {
+  --t-bg: #0f172a;
+  --t-card: #1e293b;
+  --t-text: #f1f5f9;
+  --t-muted: #94a3b8;
+  --t-border: #334155;
+  --t-input-bg: #0f172a;
+}
+
+.team-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.team-header h1 {
+  font-size: 24px;
+  margin: 0 0 4px 0;
+}
+
+.team-header p {
+  margin: 0;
+  color: var(--t-muted);
+  font-size: 14px;
+}
+
+.btn-add-member,
+.btn-save-member {
+  background-color: var(--t-primary);
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-add-member:hover,
+.btn-save-member:hover {
+  background-color: var(--t-primary-hover);
+}
+
+/* Add Form */
+.add-member-form {
+  background: var(--t-card);
+  border: 1px solid var(--t-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.form-row input,
+.form-row select,
+.team-search,
+.team-filter {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--t-border);
+  background: var(--t-input-bg);
+  color: var(--t-text);
+  font-size: 14px;
+  outline: none;
+}
+
+.form-row input {
+  flex: 1;
+  min-width: 180px;
+}
+
+/* Stats */
+.team-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat-box {
+  background: var(--t-card);
+  border: 1px solid var(--t-border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--t-muted);
+}
+
+.stat-value {
+  font-size: 22px;
+}
+
+.active-text {
+  color: #10b981;
+}
+
+/* Controls */
+.team-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.team-search {
+  flex: 1;
+  min-width: 220px;
+}
+
+/* Cards Layout (Flexbox) */
+.team-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* --- الكارد الأساسي مع حركات الدخول --- */
+.member-card {
+  background: var(--t-card);
+  border: 1px solid var(--t-border);
+  border-radius: 14px;
+  padding: 16px 14px;
+  width: calc((100% - 48px) / 4);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  
+  /* حركات تمرير الماوس */
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              box-shadow 0.4s ease, 
+              border-color 0.3s ease;
+              
+  /* حركة الدخول المتتالية */
+  opacity: 0;
+  transform: translateY(30px) scale(0.9);
+  animation: bounceInUp 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* --- تأثيرات الـ Hover (حركة تفاعلية 3D) --- */
+.member-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  border-color: var(--t-primary);
+  box-shadow: 0 15px 30px rgba(79, 70, 229, 0.15);
+}
+
+body.dark-mode .member-card:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 
+              0 0 15px rgba(79, 70, 229, 0.2);
+}
+
+/* --- تأخير الأنيميشن لكل كارد عشان يدخلوا بالترتيب (Staggered Animation) --- */
+.member-card:nth-child(1) { animation-delay: 0.1s; }
+.member-card:nth-child(2) { animation-delay: 0.2s; }
+.member-card:nth-child(3) { animation-delay: 0.3s; }
+.member-card:nth-child(4) { animation-delay: 0.4s; }
+.member-card:nth-child(n+5) { animation-delay: 0.5s; }
+
+/* --- كود حركة الدخول (Bounce In Up) --- */
+@keyframes bounceInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.85);
+  }
+  70% {
+    transform: translateY(-4px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* --- الهيدر العلوي --- */
+.member-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- حركة للـ Avatar عند الـ Hover --- */
+.member-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--t-primary);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease;
+}
+
+.member-card:hover .member-avatar {
+  transform: rotate(10deg) scale(1.12);
+  background-color: var(--t-primary-hover);
+}
+
+/* --- زر تغيير الحالة مع حركة نبض خفيفة --- */
+.status-dot {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.status-dot:hover {
+  transform: scale(1.08);
+  filter: brightness(1.1);
+}
+
+.status-dot.online {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+}
+
+/* نبض خفيف للحالة النشطة عند الـ Hover */
+.member-card:hover .status-dot.online {
+  animation: pulseGreen 1.5s infinite;
+}
+
+@keyframes pulseGreen {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.status-dot.away {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+}
+
+.member-info {
+  text-align: center;
+  min-width: 0;
+}
+
+.member-info h3 {
+  margin: 0 0 6px 0;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.member-card:hover .member-info h3 {
+  color: var(--t-primary);
+}
+
+/* --- رتبة العضو مع حركة زووم هادئة --- */
+.role-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--t-primary);
+  background: rgba(79, 70, 229, 0.12);
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.member-card:hover .role-badge {
+  transform: scale(1.05);
+  background: rgba(79, 70, 229, 0.18);
+}
+
+.member-email {
+  margin: 0;
+  font-size: 12px;
+  color: var(--t-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.member-actions {
+  border-top: 1px solid var(--t-border);
+  padding-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* --- زر الحذف اللطيف --- */
+.btn-remove {
+  background: transparent;
+  color: var(--t-muted);
+  border: 1px solid var(--t-border);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-remove:hover {
+  background: rgba(239, 68, 68, 0.08);
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.empty-state {
+  color: var(--t-muted);
+  font-size: 15px;
+}
+
+/* --- responsive --- */
+@media (max-width: 1100px) {
+  .member-card {
+    width: calc((100% - 16px) / 2);
+  }
+}
+
+@media (max-width: 640px) {
+  .member-card {
+    width: 100%;
+  }
+}
