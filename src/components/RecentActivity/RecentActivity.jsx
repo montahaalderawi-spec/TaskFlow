@@ -1,8 +1,7 @@
- import React, { useState } from "react";
+import React, { useState } from "react";
 import "./RecentActivity.css";
 
 const RecentActivity = ({ team = [] }) => {
-  const [showAll, setShowAll] = useState(false);
   const [activeFilter, setActiveFilter] = useState("All");
 
   const getMemberName = (index, fallback) => {
@@ -78,10 +77,6 @@ const RecentActivity = ({ team = [] }) => {
           (activity) => activity.type === activeFilter
         );
 
-  const visibleActivities = showAll
-    ? filteredActivities
-    : filteredActivities.slice(0, 4);
-
   return (
     <div className="recent-activity">
       <div className="activity-header">
@@ -89,15 +84,6 @@ const RecentActivity = ({ team = [] }) => {
           <h3>Recent Activity</h3>
           <p>Latest team activities</p>
         </div>
-
-        {filteredActivities.length > 4 && (
-          <button
-            className="activity-view-btn"
-            onClick={() => setShowAll(!showAll)}
-          >
-            {showAll ? "Show Less" : "View All"}
-          </button>
-        )}
       </div>
 
       <div className="activity-filters">
@@ -107,10 +93,7 @@ const RecentActivity = ({ team = [] }) => {
             className={`activity-filter ${
               activeFilter === filter ? "active" : ""
             }`}
-            onClick={() => {
-              setActiveFilter(filter);
-              setShowAll(false);
-            }}
+            onClick={() => setActiveFilter(filter)}
           >
             {filter}
           </button>
@@ -118,11 +101,13 @@ const RecentActivity = ({ team = [] }) => {
       </div>
 
       <div className="activity-list">
-        {visibleActivities.length > 0 ? (
-          visibleActivities.map((activity) => (
+        {filteredActivities.length > 0 ? (
+          filteredActivities.map((activity) => (
             <div className="activity-item" key={activity.id}>
               <div className="activity-timeline">
-                <div className={`activity-icon activity-${activity.type.toLowerCase()}`}>
+                <div
+                  className={`activity-icon activity-${activity.type.toLowerCase()}`}
+                >
                   {activity.icon}
                 </div>
               </div>
@@ -132,7 +117,6 @@ const RecentActivity = ({ team = [] }) => {
                   <span className="activity-avatar">
                     {activity.name.charAt(0).toUpperCase()}
                   </span>
-
                   <strong>{activity.name}</strong>{" "}
                   {activity.action}
                 </p>

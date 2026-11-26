@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./AssignedTasks.css";
 
 const tasks = [
@@ -47,10 +47,6 @@ const tasks = [
 ];
 
 const AssignedTasks = () => {
-  const [showAll, setShowAll] = useState(false);
-
-  const visibleTasks = showAll ? tasks : tasks.slice(0, 4);
-
   return (
     <div className="assigned-tasks">
       <div className="assigned-header">
@@ -58,17 +54,10 @@ const AssignedTasks = () => {
           <h3>Assigned Tasks</h3>
           <p>Tasks assigned to your team</p>
         </div>
-
-        <button
-          className="assigned-toggle"
-          onClick={() => setShowAll(!showAll)}
-        >
-          {showAll ? "Show Less ↑" : "View All →"}
-        </button>
       </div>
 
       <div className="assigned-list">
-        {visibleTasks.map((task) => (
+        {tasks.map((task) => (
           <div className="assigned-item" key={task.id}>
             <div className="task-details">
               <h4>{task.title}</h4>
@@ -93,7 +82,7 @@ const AssignedTasks = () => {
       </div>
 
       <div className="assigned-footer">
-        Showing {visibleTasks.length} of {tasks.length} tasks
+        Showing {tasks.length} tasks
       </div>
     </div>
   );

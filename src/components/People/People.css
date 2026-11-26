@@ -281,3 +281,10 @@
   background: #e05252;
   color: white;
 }
+/* Place Team Members below Tasks Overview */
+.people-card {
+  grid-column: 1 / -1;
+  flex: 0 0 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
